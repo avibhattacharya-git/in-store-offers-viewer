@@ -45,17 +45,21 @@ public class OfferService {
 
         LocalDateTime now = LocalDateTime.now();
         List<Offer> offers;
+        
+        // Trim inputs to avoid whitespace issues
+        String trimmedCategory = category != null ? category.trim() : null;
+        String trimmedSearchTerm = searchTerm != null ? searchTerm.trim() : null;
 
         // Apply filters based on parameters
-        if (searchTerm != null && !searchTerm.trim().isEmpty() && category != null && !category.trim().isEmpty()) {
+        if (trimmedSearchTerm != null && !trimmedSearchTerm.isEmpty() && trimmedCategory != null && !trimmedCategory.isEmpty()) {
             // Both search and category filter
-            offers = offerRepository.searchActiveOffersByCategory(storeId, category, searchTerm.trim(), now);
-        } else if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+            offers = offerRepository.searchActiveOffersByCategory(storeId, trimmedCategory, trimmedSearchTerm, now);
+        } else if (trimmedSearchTerm != null && !trimmedSearchTerm.isEmpty()) {
             // Only search filter
-            offers = offerRepository.searchActiveOffers(storeId, searchTerm.trim(), now);
-        } else if (category != null && !category.trim().isEmpty()) {
+            offers = offerRepository.searchActiveOffers(storeId, trimmedSearchTerm, now);
+        } else if (trimmedCategory != null && !trimmedCategory.isEmpty()) {
             // Only category filter
-            offers = offerRepository.findActiveOffersByStoreIdAndCategory(storeId, category, now);
+            offers = offerRepository.findActiveOffersByStoreIdAndCategory(storeId, trimmedCategory, now);
         } else {
             // No filters, get all active offers
             offers = offerRepository.findActiveOffersByStoreId(storeId, now);

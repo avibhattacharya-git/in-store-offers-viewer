@@ -366,4 +366,21 @@ class OfferServiceTest {
         assertThat(result).hasSize(1);
         verify(offerRepository).searchActiveOffers(eq(storeId), eq("milk"), any(LocalDateTime.class));
     }
+
+    @Test
+    @DisplayName("Should trim whitespace from category")
+    void shouldTrimWhitespaceFromCategory() {
+        // Given
+        String storeId = "store1";
+        String category = "  Produce  ";
+        when(offerRepository.findActiveOffersByStoreIdAndCategory(eq(storeId), eq("Produce"), any(LocalDateTime.class)))
+                .thenReturn(List.of(offer1));
+
+        // When
+        List<Offer> result = offerService.getActiveOffers(storeId, category, null, null);
+
+        // Then
+        assertThat(result).hasSize(1);
+        verify(offerRepository).findActiveOffersByStoreIdAndCategory(eq(storeId), eq("Produce"), any(LocalDateTime.class));
+    }
 }
