@@ -31,3 +31,4 @@ Thumbs.db
 # Database
 *.db
 *.h2.db
+data/
