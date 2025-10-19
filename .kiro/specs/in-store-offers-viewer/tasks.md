@@ -108,14 +108,25 @@
   - Handle generic exceptions (500)
   - _Requirements: 1.1, 3.1, 4.2_
 
-- [ ] 6. Configure CORS and application settings
+- [x] 6. Configure CORS and application settings
+
+
+
+
+
   - Create WebConfig class implementing WebMvcConfigurer
   - Configure CORS to allow frontend origin
   - Set up application-dev.properties for HSQLDB
   - Set up application-prod.properties for PostgreSQL
   - _Requirements: 1.1_
 
-- [ ] 7. Create database initialization script
+- [x] 7. Create database initialization script
+
+
+
+
+
+
   - Write data.sql or use CommandLineRunner to populate initial data
   - Add sample stores (2-3 stores with addresses)
   - Add sample categories (Produce, Dairy, Meat, Bakery, Household, etc.)
