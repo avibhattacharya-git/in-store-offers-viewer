@@ -1,6 +1,7 @@
 package com.retail.offersviewer.controller;
 
 import com.retail.offersviewer.entity.Store;
+import com.retail.offersviewer.exception.ResourceNotFoundException;
 import com.retail.offersviewer.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,14 +46,10 @@ public class StoreController {
     public ResponseEntity<Store> getStoreById(@PathVariable String storeId) {
         log.info("GET /api/stores/{} - Retrieving store", storeId);
         
-        return storeService.getStoreById(storeId)
-                .map(store -> {
-                    log.info("Store found: {}", store.getName());
-                    return ResponseEntity.ok(store);
-                })
-                .orElseGet(() -> {
-                    log.warn("Store not found with ID: {}", storeId);
-                    return ResponseEntity.notFound().build();
-                });
+        Store store = storeService.getStoreById(storeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Store", "id", storeId));
+        
+        log.info("Store found: {}", store.getName());
+        return ResponseEntity.ok(store);
     }
 }

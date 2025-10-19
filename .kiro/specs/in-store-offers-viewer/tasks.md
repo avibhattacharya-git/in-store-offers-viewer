@@ -93,7 +93,13 @@
   - Write GET /api/categories endpoint to return all categories
   - _Requirements: 5.1, 5.2_
 
-- [ ] 5. Implement global exception handling
+- [x] 5. Implement global exception handling
+
+
+
+
+
+
   - Create custom ResourceNotFoundException
   - Create ErrorResponse DTO class
   - Write GlobalExceptionHandler with @ControllerAdvice

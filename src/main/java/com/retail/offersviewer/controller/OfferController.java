@@ -1,6 +1,7 @@
 package com.retail.offersviewer.controller;
 
 import com.retail.offersviewer.entity.Offer;
+import com.retail.offersviewer.exception.ResourceNotFoundException;
 import com.retail.offersviewer.service.OfferService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,14 +58,10 @@ public class OfferController {
     public ResponseEntity<Offer> getOfferById(@PathVariable String offerId) {
         log.info("GET /api/offers/{} - Retrieving offer details", offerId);
         
-        return offerService.getOfferById(offerId)
-                .map(offer -> {
-                    log.info("Offer found: {}", offer.getTitle());
-                    return ResponseEntity.ok(offer);
-                })
-                .orElseGet(() -> {
-                    log.warn("Offer not found with ID: {}", offerId);
-                    return ResponseEntity.notFound().build();
-                });
+        Offer offer = offerService.getOfferById(offerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Offer", "id", offerId));
+        
+        log.info("Offer found: {}", offer.getTitle());
+        return ResponseEntity.ok(offer);
     }
 }
